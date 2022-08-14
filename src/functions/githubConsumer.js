@@ -3,7 +3,9 @@ const user = 'devmatheusguerra'
 async function getUser () {
   const response = await fetch(`https://api.github.com/users/${user}`)
   if (response.status != 200) {
-    return 'Error'
+    const response_backup = await fetch(`https://agencia4devs.com/devmatheusguerra.github.io/api.php?r=user`);
+    const data = await response_backup.json()
+    return data
   }
   const data = await response.json()
   return data
@@ -69,4 +71,5 @@ const Github = {
   getMetrics: getMetrics, 
   getUser: getUser
 }
-export default Github;
+
+module.exports = Github;

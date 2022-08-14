@@ -45,7 +45,7 @@
 <script>
 import apexchart from "vue3-apexcharts";
 import GITHUB_LANGS from "@/data/github";
-import getMetrics from "@/functions/githubConsumer";
+import {getMetrics} from "@/functions/githubConsumer";
 export default {
   name: "GithubLanguages",
   components: {
@@ -112,7 +112,7 @@ export default {
   mounted() {
     let sum = 0;
     getMetrics().then((langs) => {
-      console.table({ langs });
+      
       for (let lang in langs) {
         sum += this.langs[lang];
       }

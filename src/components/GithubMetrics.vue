@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { getUser } from '@/functions/githubConsumer';
 export default {
   name: "GithubMetrics",
   components: {},
@@ -56,24 +57,13 @@ export default {
     };
   },
   mounted() {
-    fetch("https://api.github.com/users/devmatheusguerra")
-      .then((response) => (response.status === 200 ? response.json() : null))
-      .then((data) => {
-        if (data) {
-          this.gists =
-            data.public_gists < 10
-              ? "0" + data.public_gists
-              : data.public_gists;
-          this.followers =
-            data.followers < 10 ? "0" + data.followers : data.followers;
-          this.following =
-            data.following < 10 ? "0" + data.following : data.following;
-          this.repositories =
-            data.public_repos < 10
-              ? "0" + data.public_repos
-              : data.public_repos;
-        }
-      });
+    getUser().then((data) => {
+      this.gists = data.public_gists;
+      this.followers = data.followers;
+      this.following = data.following;
+      this.repositories = data.public_repos;
+    });
+    
   },
 };
 </script>
