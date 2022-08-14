@@ -4,6 +4,7 @@
     <TopBanner :lang="this.language"> </TopBanner>
     <GithubMetrics :lang="this.language"></GithubMetrics>
     <GithubLanguages :lang="this.language"></GithubLanguages>
+    <CoffeeChart percent="50"></CoffeeChart>
   </main>
 </template>
 
@@ -12,9 +13,10 @@ import TopNavbar from "./TopNavbar.vue";
 import TopBanner from "./TopBanner.vue";
 import GithubMetrics from "./GithubMetrics.vue";
 import GithubLanguages from "./GithubLanguages.vue";
+import CoffeeChart from "./CoffeeChart.vue";
 export default {
   name: "MainContent",
-  components: { TopBanner, TopNavbar, GithubMetrics, GithubLanguages },
+  components: { TopBanner, TopNavbar, GithubMetrics, GithubLanguages, CoffeeChart },
   data() {
     return {
       language: "",

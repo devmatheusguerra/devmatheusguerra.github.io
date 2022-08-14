@@ -112,10 +112,10 @@ export default {
   mounted() {
     let sum = 0;
     getMetrics().then((langs) => {
-      
       for (let lang in langs) {
         sum += this.langs[lang];
       }
+      console.log(sum)
       for (let lang in this.langs) {
         this.series.push(
           parseFloat(((this.langs[lang] / sum) * 100).toFixed(1))
