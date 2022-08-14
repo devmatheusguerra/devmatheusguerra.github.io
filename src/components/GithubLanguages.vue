@@ -4,46 +4,48 @@
       class="chart-language-github"
       height="400"
       v-if="this.series.length == 0"
-    >
-      <h1>teste</h1>
-    </div>
+    ></div>
 
     <apexchart
-      class="chart-language-github"
-      type="radialBar"
-      height="400"
-      :options="options"
+    width="500px"
+      type="pie"
+      :options="chartOptions"
       :series="series"
       v-else
     ></apexchart>
 
     <div class="chart-description">
-        <h2>Meus Projetos</h2>
-        <p>
-            Neste segmento, são exibidas as métricas reais e em <span class="ps">tempo real<sup>*</sup></span> de uso de diferentes linguagens/tecnologias obtidas através do meu perfil no GitHub.
-        </p>
-        <p>
-           Grande parte dos projetos computados foram desenvolvidos exclusivamente para aprendizado e apresentação de conhecimentos. Além desses possuo alguns outros projetos privados nos quais utilizei 
-            <span class="tecnologias">PHP</span>, 
-            <span class="tecnologias">Lumen</span>, 
-            <span class="tecnologias">JavaScript</span>, 
-            <span class="tecnologias">Electron</span>, 
-            <span class="tecnologias">Cordova</span>, 
-            <span class="tecnologias">Ionic</span>, 
-            <span class="tecnologias">MySQL</span>.
-        </p>
-        <p class="obs">
-            <span class="ps">*</span> Caso não seja possível acessar a API, não serão apresentados dados em tempo real. Serão obtidos dados de um backup anterior.
-        </p>
-
+      <h2>Meus Projetos</h2>
+      <p>
+        Neste segmento, são exibidas as métricas reais e em
+        <span class="ps">tempo real<sup>*</sup></span> de uso de diferentes
+        linguagens/tecnologias obtidas através do meu perfil no GitHub.
+      </p>
+      <p>
+        Grande parte dos projetos computados foram desenvolvidos exclusivamente
+        para aprendizado e apresentação de conhecimentos. Além desses possuo
+        alguns outros projetos privados nos quais utilizei
+        <span class="tecnologias">PHP</span>,
+        <span class="tecnologias">Lumen</span>,
+        <span class="tecnologias">JavaScript</span>,
+        <span class="tecnologias">Electron</span>,
+        <span class="tecnologias">Cordova</span>,
+        <span class="tecnologias">Ionic</span>,
+        <span class="tecnologias">MySQL</span>.
+      </p>
+      <p class="obs">
+        <span class="ps">*</span> Caso não seja possível acessar a API do
+        Github, não serão apresentados dados em tempo real. Serão obtidos dados
+        de backup de aproximadamente 1h atrás.
+      </p>
     </div>
-
   </div>
 </template>
 
 <script>
 import apexchart from "vue3-apexcharts";
 import GITHUB_LANGS from "@/data/github";
+import getMetrics from "@/functions/githubConsumer";
 export default {
   name: "GithubLanguages",
   components: {
@@ -55,41 +57,38 @@ export default {
       langs: GITHUB_LANGS,
       username: "devmatheusguerra",
       series: [],
-      options: {
+      chartOptions: {
         chart: {
-          height: 400,
           width: "100%",
-          type: "radialBar",
+          type: "pie",
+        },
+        labels: [],
+        theme: {
+          monochrome: {
+            enabled: true,
+            color: "#787878",
+          },
         },
         plotOptions: {
-          radialBar: {
-            startAngle: -180,
-            endAngle: 45,
-            hollow: {
-              margin: 5,
-              size: "20%",
-              background: "transparent",
-              image: undefined,
-            },
+          pie: {
             dataLabels: {
-
-              name: {
-                fontSize: "18px",
-              },
-              value: {
-                fontSize: "14px",
-              },
-              total: {
-                show: true,
-                label: "Total",
-                formatter: function () {
-                  return 100 + "%";
-                },
-              },
+              offset: -5,
             },
           },
         },
-        labels: [],
+        title: {
+          text: "Linguagens mais utilizadas em projetos",
+          align: "center",
+        },
+        dataLabels: {
+          formatter(val, opts) {
+            const name = opts.w.globals.labels[opts.seriesIndex];
+            return [name, val.toFixed(1) + "%"];
+          },
+        },
+        legend: {
+          show: false,
+        },
       },
     };
   },
@@ -112,13 +111,18 @@ export default {
   },
   mounted() {
     let sum = 0;
-    for (let lang in this.langs) {
-      sum += this.langs[lang];
-    }
-    for (let lang in this.langs) {
-      this.series.push(parseFloat(((this.langs[lang] / sum) * 100).toFixed(1)));
-      this.options.labels.push(lang);
-    }
+    getMetrics().then((langs) => {
+      console.table({ langs });
+      for (let lang in langs) {
+        sum += this.langs[lang];
+      }
+      for (let lang in this.langs) {
+        this.series.push(
+          parseFloat(((this.langs[lang] / sum) * 100).toFixed(1))
+        );
+        this.chartOptions.labels.push(lang);
+      }
+    });
   },
 };
 </script>
@@ -150,21 +154,20 @@ export default {
   color: #9a9a9a;
 }
 
-.tecnologias
-{
-    font-weight: bold;
-    text-decoration: underline;
+.tecnologias {
+  font-weight: bold;
+  text-decoration: underline;
 }
 
-.ps{
-    font-weight: bolder;
+.ps {
+  font-weight: bolder;
 }
 
-.ps sup{
-    font-size: 1.2rem;
+.ps sup {
+  font-size: 1.2rem;
 }
 
-.obs{
-    font-size: 0.8rem;
+.obs {
+  font-size: 0.8rem;
 }
 </style>
