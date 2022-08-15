@@ -12,6 +12,9 @@ export default {
   components: {},
   props: ["lang"],
   methods: {
+    clearHTML(){
+      document.querySelector("#welcome-p").innerHTML = "<b id='bold-welcome'></b>";
+    },
     writePT(){
       setTimeout(() => {
           const msg = "Olá!";
@@ -74,8 +77,10 @@ export default {
   },
   mounted() {
     if (this.lang === "pt") {
+      this.clearHTML();
       this.writePT();
     } else {
+      this.clearHTML();
       this.writeEN();
     }
 
