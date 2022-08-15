@@ -7,7 +7,7 @@
     ></div>
 
     <apexchart
-    width="500px"
+      width="500px"
       type="pie"
       :options="chartOptions"
       :series="series"
@@ -15,13 +15,18 @@
     ></apexchart>
 
     <div class="chart-description">
-      <h2>Meus Projetos</h2>
-      <p>
+      <h2 v-if="this.lang == 'pt'">Meus Projetos</h2>
+      <h2 v-else>My Projects</h2>
+      <p v-if="this.lang == 'pt'">
         Neste segmento, são exibidas as métricas reais e em
         <span class="ps">tempo real<sup>*</sup></span> de uso de diferentes
         linguagens/tecnologias obtidas através do meu perfil no GitHub.
       </p>
-      <p>
+      <p v-else>
+        In this section, you can watch reals and lives measurements of different
+        programming languages/technologies usage through my profile on GitHub.
+      </p>
+      <p v-if="this.lang == 'pt'">
         Grande parte dos projetos computados foram desenvolvidos exclusivamente
         para aprendizado e apresentação de conhecimentos. Além desses possuo
         alguns outros projetos privados nos quais utilizei
@@ -33,10 +38,29 @@
         <span class="tecnologias">Ionic</span>,
         <span class="tecnologias">MySQL</span>.
       </p>
-      <p class="obs">
+
+      <p v-else>
+        Most of the projects developed exclusively for learning and knowledge
+        presentation. Besides these I made some other private projects in which
+        I coded
+        <span class="tecnologias">PHP</span>,
+        <span class="tecnologias">Lumen</span>,
+        <span class="tecnologias">JavaScript</span>,
+        <span class="tecnologias">Electron</span>,
+        <span class="tecnologias">Cordova</span>,
+        <span class="tecnologias">Ionic</span>,
+        <span class="tecnologias">MySQL</span>.
+      </p>
+
+      <p class="obs" v-if="this.lang == 'pt'">
         <span class="ps">*</span> Caso não seja possível acessar a API do
         Github, não serão apresentados dados em tempo real. Serão obtidos dados
         de backup de aproximadamente 1h atrás.
+      </p>
+
+      <p class="obs" v-else>
+        <span class="ps">*</span> If, for some reason, the Github API is not
+        working properly, it'll be displayed data from 1 hour ago
       </p>
     </div>
   </div>
@@ -45,7 +69,7 @@
 <script>
 import apexchart from "vue3-apexcharts";
 import GITHUB_LANGS from "@/data/github";
-import {getMetrics} from "@/functions/githubConsumer";
+import { getMetrics } from "@/functions/githubConsumer";
 export default {
   name: "GithubLanguages",
   components: {
@@ -115,7 +139,7 @@ export default {
       for (let lang in langs) {
         sum += this.langs[lang];
       }
-      console.log(sum)
+      console.log(sum);
       for (let lang in this.langs) {
         this.series.push(
           parseFloat(((this.langs[lang] / sum) * 100).toFixed(1))

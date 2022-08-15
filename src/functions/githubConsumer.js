@@ -54,7 +54,7 @@ async function getMetrics () {
       const langs = await getMetricsFromAnotherServer()
       return langs
     }
-
+    // console.table(languages)
     languages.forEach((language, name) => {
       if (langs[name]) {
         langs[name] += language

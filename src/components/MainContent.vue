@@ -4,7 +4,10 @@
     <TopBanner :lang="this.language"> </TopBanner>
     <GithubMetrics :lang="this.language"></GithubMetrics>
     <GithubLanguages :lang="this.language"></GithubLanguages>
-    <CoffeeChart percent="50"></CoffeeChart>
+    <SkillLanguages :lang="this.language"></SkillLanguages>
+    <EducationJobs :lang="this.language"></EducationJobs>
+    <hr>
+    <FreeCourses :lang="this.language"></FreeCourses>
   </main>
 </template>
 
@@ -13,10 +16,12 @@ import TopNavbar from "./TopNavbar.vue";
 import TopBanner from "./TopBanner.vue";
 import GithubMetrics from "./GithubMetrics.vue";
 import GithubLanguages from "./GithubLanguages.vue";
-import CoffeeChart from "./CoffeeChart.vue";
+import SkillLanguages from "./SkillLanguages.vue";
+import EducationJobs from "./EducationJobs.vue";
+import FreeCourses from "./FreeCourses.vue";
 export default {
   name: "MainContent",
-  components: { TopBanner, TopNavbar, GithubMetrics, GithubLanguages, CoffeeChart },
+  components: { TopBanner, TopNavbar, GithubMetrics, GithubLanguages, SkillLanguages, EducationJobs, FreeCourses },
   data() {
     return {
       language: "",

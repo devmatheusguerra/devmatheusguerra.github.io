@@ -3,7 +3,11 @@
     <div class="smoke"></div>
     <div class="cup">
       <div class="liquid">
-        <span class="legend">{{ (percent / 20).toFixed(1) }}/5</span>
+        <span class="legend">
+          <img class="logo" :src="this.logo" alt="JavaScript" />
+          <br />
+          {{ this.percentage.toFixed(1) }}%
+        </span>
         <div class="content"></div>
       </div>
     </div>
@@ -14,11 +18,29 @@
 export default {
   name: "CoffeeChart",
   components: {},
-  props: ["percent"],
-  data() {},
+  props: ["percent", "logo", "color"],
+  data() {
+    return {
+      percentage: 0,
+      alreadyRun: false,
+    };
+  },
   methods: {
-    wave() {
-      const liquid = document.querySelector(".content");
+    incrementTimer() {
+      this.percentage += 1;
+      const percent = this.percent;
+
+      const intervalo = setInterval(() => {
+        if (this.percentage < percent) {
+          this.percentage += 1;
+        } else {
+          clearInterval(intervalo);
+        }
+      }, (145 * 50) / percent);
+    },
+
+    wave(elem) {
+      const liquid = elem.querySelector(".content");
       const time = 1500;
 
       liquid.style.borderRadius = "0% 0% 50% 0%";
@@ -36,8 +58,8 @@ export default {
       }, time * 4);
     },
 
-    moveLiquid(percent = 0) {
-      const liquid = document.querySelector(".content");
+    moveLiquid(percent = 0, elem) {
+      const liquid = elem.querySelector(".content");
       const time = 1800;
       const step = parseInt(percent / 3);
       setTimeout(() => {
@@ -67,10 +89,16 @@ export default {
     },
   },
   mounted() {
+    if(this.color){
+      this.$el.querySelector(".cup").style.border = "inset 10px " + this.color;
+      this.$el.querySelector(".liquid").style.backgroundColor = this.color + "5F";
+    }
     window.addEventListener("scroll", () => {
-      if (this.isInViewport(this.$el)) {
-        this.wave();
-        this.moveLiquid(this.percent);
+      if (this.isInViewport(this.$el) && !this.alreadyRun) {
+        this.wave(this.$el);
+        this.moveLiquid(this.percent, this.$el);
+        this.incrementTimer();
+        this.alreadyRun = true;
       }
     });
   },
@@ -79,8 +107,8 @@ export default {
 
 <style scoped>
 .coffee {
-  min-width: 200px;
-  width: 220px;
+  min-width: 100px;
+  width: 100px;
   aspect-ratio: 4/5;
   position: relative;
   display: flex;
@@ -115,7 +143,7 @@ export default {
   position: relative;
   width: 5%;
   height: 15%;
-  background-color: rgb(200, 200, 200);
+  background-color: rgba(200, 200, 200, 0.9);
   filter: blur(6px);
   top: 0;
   margin-bottom: 10px;
@@ -141,8 +169,8 @@ export default {
   position: relative;
   width: 75%;
   height: 60%;
-  border: solid 30px #000;
-  border-radius: 0px 0px 50px 50px;
+  border: solid 10px #222;
+  border-radius: 0px 0px 15% 15%;
 }
 
 .cup::after {
@@ -150,11 +178,11 @@ export default {
   position: absolute;
   transform: translateY(-50%);
   top: 50%;
-  right: -65%;
+  right: -55%;
   width: 28%;
   height: 60%;
   background-color: #000;
-  border: solid 27px #000;
+  border: inherit;
   border-radius: 0px 50px 50px 0px;
   background-color: transparent;
 }
@@ -165,7 +193,7 @@ export default {
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-color: #6a4f3a;
+  background-color: #b69175;
   overflow: hidden;
 }
 
@@ -181,17 +209,22 @@ export default {
 }
 
 .legend {
+  font-family: "Quicksand";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 1);
   z-index: 99;
-  font-size: 1.5em;
+  font-size: 1rem;
   font-weight: bold;
   text-align: center;
   width: 100%;
-  text-shadow: 0 0 10px #fff;
+}
+
+.logo {
+  width: 50%;
+  object-fit: contain;
 }
 
 @keyframes smoke {
