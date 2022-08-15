@@ -7,6 +7,10 @@
         <h4 class="year">2013 - 2015</h4>
         <ul>
           <li>
+            <h5>Inglês - Intermediário</h5>
+            <span>Interway</span>
+          </li>
+          <li>
             <h5>Estagiário - Programador</h5>
             <span>CREDE 7 (SEDUC-CE)</span>
           </li>
@@ -19,6 +23,10 @@
       <div class="col">
         <h4 class="year">2016 - 2019</h4>
         <ul>
+          <li>
+            <h5>Alemão - Básico</h5>
+            <span>Centro de Idiomas Estrangeiros</span>
+          </li>
           <li>
             <h5>Engenharia da Computação <b>(incompleto)</b></h5>
             <span>Universidade Federal do Ceará - Sobral</span>
@@ -39,6 +47,13 @@
       <div class="col">
         <h4 class="year">2020 - Presente</h4>
         <ul>
+          <li>
+            <h5>
+              Professor - Cursos técnicos em Informática e Desenvolvimento de
+              Sistemas (2017 - atualmente)
+            </h5>
+            <span>EEEP Francisco Paiva Tavares</span>
+          </li>
           <li>
             <h5>Data Science <b>(conclusão em 2022.2)</b></h5>
             <span>Universidade Maurício de Nassau</span>

@@ -5,12 +5,20 @@
     <div class="certificates">
       <AluraCertificate
         class="certificate"
-        v-for="certificate in certificates"
+        v-for="certificate in certificates.slice(0, this.show)"
         :front="certificate.front"
         :back="certificate.back"
         :url="certificate.url"
         v-bind:key="certificate.url"
       ></AluraCertificate>
+    </div>
+    <div class="more-certificates" v-if="certificates.length > this.show">
+      <button class="show-btn" v-if="this.lang == 'pt'" @click="showMore()">
+        <i class="bx bx-plus"></i> Ver mais
+      </button>
+      <button class="show-btn" @click="showMore()" v-else>
+        <i class="bx bx-plus"></i> See more
+      </button>
     </div>
   </div>
 </template>
@@ -22,8 +30,23 @@ export default {
   name: "FreeCourses",
   components: { AluraCertificate },
   props: ["lang"],
+  methods: {
+    showMore: function () {
+      this.show += 3;
+      setTimeout(() => {
+        var scrollPosition = document.body.scrollTop;
+        // Scroll smooth animation option
+        window.scrollBy({
+          top: scrollPosition + 250,
+          left: 0,
+          behavior: "smooth",
+        });
+      }, 500);
+    },
+  },
   data() {
     return {
+      show: 3,
       certificates: [
         {
           url: "https://cursos.alura.com.br/certificate/bedb881b-ed67-4a3c-956a-b2e6881817e7",
@@ -159,7 +182,7 @@ export default {
 <style scoped>
 .courses-section {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -184,5 +207,17 @@ export default {
 .certificate {
   margin: 300px 10px;
   margin-top: 0;
+}
+
+.show-btn {
+  width: fit-content;
+  padding: 15px 20px;
+  border-radius: 5px;
+  border: 1px solid #9a9a9a;
+  background-color: transparent;
+  color: #9a9a9a;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
 }
 </style>

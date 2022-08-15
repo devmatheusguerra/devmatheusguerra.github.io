@@ -5,15 +5,25 @@
 
     <div class="centered-banner">
       <div class="language" v-if="this.lang == 'pt'">
-        <span class="selected" @click="changeLanguage('pt')">PT</span>
+        <span class="selected" @click="changeLanguage('pt')">
+          <img class="flag" src="@/assets/br.png" alt="" /> PT
+        </span>
         |
-        <span @click="changeLanguage('en')">EN</span>
+        <span @click="changeLanguage('en')">
+          <img class="flag" src="@/assets/us.png" alt="" />
+          EN
+        </span>
       </div>
 
       <div class="language" v-else>
-        <span @click="changeLanguage('pt')">PT</span>
+        <span @click="changeLanguage('pt')">
+          <img class="flag" src="@/assets/br.png" alt="" /> PT
+        </span>
         |
-        <span class="selected" @click="changeLanguage('en')">EN</span>
+        <span class="selected" @click="changeLanguage('en')">
+          <img class="flag" src="@/assets/us.png" alt="" />
+          EN
+        </span>
       </div>
       <img src="@/assets/me.png" alt="" id="me" />
     </div>
@@ -65,36 +75,25 @@
           Para mais informações, entre em contato comigo pelo e-mail ou pelo
           telefone abaixo:
         </p>
-          <span class="contact-links">
-            <b>E-mail: </b>
-            <a href="mailto:devmatheusguerra@gmail.com">
-              devmatheusguerra@gmail.com
-            </a>
-          </span>
-          <br>
-          <span class="contact-links">
-            <b>Telefone: </b>
-            <a href="tel:+55 85 9 8866-5372"> +55 85 9 8866-5372 </a>
-          </span>
+        <span class="contact-links">
+          <b>E-mail: </b>
+          <a href="mailto:devmatheusguerra@gmail.com">
+            devmatheusguerra@gmail.com
+          </a>
+        </span>
       </div>
 
       <div class="topic" v-else>
         <h2>Contacts</h2>
         <p>For more information, contact me by e-mail or phone below:</p>
-          <span class="contact-links">
-            <b>E-mail: </b>
-            <a href="mailto:devmatheusguerra@gmail.com">
-              devmatheusguerra@gmail.com
-            </a>
-          </span>
-          <br>
-          <span class="contact-links">
-            <b>Phone: </b>
-            <a href="tel:+55 85 9 8866-5372"> +55 85 9 8866-5372 </a>
-          </span>
+        <span class="contact-links">
+          <b>E-mail: </b>
+          <a href="mailto:devmatheusguerra@gmail.com">
+            devmatheusguerra@gmail.com
+          </a>
+        </span>
       </div>
     </div>
-
   </header>
 </template>
 
@@ -198,13 +197,17 @@ ul {
   font-weight: bolder;
 }
 
-.contact-links{
-  font-size: .8rem;
+.contact-links {
+  font-size: 0.8rem;
   font-weight: normal;
 }
 
-.contact-links b{
+.contact-links b {
   font-weight: bolder;
 }
 
+.flag {
+  width: 13px;
+  height: 13px;
+}
 </style>

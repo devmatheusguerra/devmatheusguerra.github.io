@@ -18,13 +18,13 @@
       <h2 v-if="this.lang == 'pt'">Meus Projetos</h2>
       <h2 v-else>My Projects</h2>
       <p v-if="this.lang == 'pt'">
-        Neste segmento, são exibidas as métricas reais e em
-        <span class="ps">tempo real<sup>*</sup></span> de uso de diferentes
+        Neste segmento, são exibidas as métricas reais de uso de diferentes
         linguagens/tecnologias obtidas através do meu perfil no GitHub.
       </p>
       <p v-else>
-        In this section, you can watch reals and lives measurements of different
-        programming languages/technologies usage through my profile on GitHub.
+        In this section, you can view measurements from different programming
+        languages/technologies usage, which it had been got through my profile
+        on GitHub.
       </p>
       <p v-if="this.lang == 'pt'">
         Grande parte dos projetos computados foram desenvolvidos exclusivamente
@@ -41,8 +41,8 @@
 
       <p v-else>
         Most of the projects developed exclusively for learning and knowledge
-        presentation. Besides these I made some other private projects in which
-        I coded
+        presentation. Besides these, I made some other private projects, in
+        which, I coded with
         <span class="tecnologias">PHP</span>,
         <span class="tecnologias">Lumen</span>,
         <span class="tecnologias">JavaScript</span>,
@@ -52,15 +52,25 @@
         <span class="tecnologias">MySQL</span>.
       </p>
 
-      <p class="obs" v-if="this.lang == 'pt'">
-        <span class="ps">*</span> Caso não seja possível acessar a API do
-        Github, não serão apresentados dados em tempo real. Serão obtidos dados
-        de backup de aproximadamente 1h atrás.
+      <p v-if="this.lang == 'pt'">
+        Para mais detalhes, acesse o meu
+        <a
+          class="link"
+          href="https://www.github.com/devmatheusguerra"
+          target="_blank"
+        >
+          <i class="bx bxl-github"></i> perfil do GitHub.
+        </a>
       </p>
-
-      <p class="obs" v-else>
-        <span class="ps">*</span> If, for some reason, the Github API is not
-        working properly, it'll be displayed data from 1 hour ago
+      <p v-else>
+        To see more details, visit my
+        <a
+          class="link"
+          href="https://www.github.com/devmatheusguerra"
+          target="_blank"
+        >
+          <i class="bx bxl-github"></i> GitHub profile.
+        </a>
       </p>
     </div>
   </div>
@@ -68,7 +78,6 @@
 
 <script>
 import apexchart from "vue3-apexcharts";
-import GITHUB_LANGS from "@/data/github";
 import { getMetrics } from "@/functions/githubConsumer";
 export default {
   name: "GithubLanguages",
@@ -78,8 +87,19 @@ export default {
   props: ["lang"],
   data() {
     return {
-      langs: GITHUB_LANGS,
-      username: "devmatheusguerra",
+      colors: [
+        "#F2EABE",
+        "#E9C7AB",
+        "#E5B9AF",
+        "#E5BACB",
+        "#C6B0CD",
+        "#A9AACD",
+        "#9EA0CD",
+        "#ACC6E1",
+        "#B1D5DD",
+        "#B1D4BF",
+        "#D4E1BE"
+      ],
       series: [],
       chartOptions: {
         chart: {
@@ -88,10 +108,8 @@ export default {
         },
         labels: [],
         theme: {
-          monochrome: {
-            enabled: true,
-            color: "#787878",
-          },
+          mode: "light",
+          palette: this.colors,
         },
         plotOptions: {
           pie: {
@@ -105,6 +123,7 @@ export default {
           align: "center",
         },
         dataLabels: {
+
           formatter(val, opts) {
             const name = opts.w.globals.labels[opts.seriesIndex];
             return [name, val.toFixed(1) + "%"];
@@ -134,19 +153,17 @@ export default {
     },
   },
   mounted() {
-    let sum = 0;
     getMetrics().then((langs) => {
-      for (let lang in langs) {
-        sum += this.langs[lang];
-      }
-      console.log(sum);
-      for (let lang in this.langs) {
-        this.series.push(
-          parseFloat(((this.langs[lang] / sum) * 100).toFixed(1))
-        );
-        this.chartOptions.labels.push(lang);
-      }
+        Object.keys(langs).forEach((key) => {
+          this.chartOptions.labels.push(key)
+        });
+
+        Object.values(langs).forEach((v) => {
+          this.series.push(parseFloat(v.toFixed(1)));
+        });
+        
     });
+
   },
 };
 </script>
@@ -183,15 +200,9 @@ export default {
   text-decoration: underline;
 }
 
-.ps {
-  font-weight: bolder;
-}
-
-.ps sup {
-  font-size: 1.2rem;
-}
-
-.obs {
-  font-size: 0.8rem;
+.link {
+  color: #9a9a9a;
+  text-decoration: none;
+  font-weight: bold;
 }
 </style>

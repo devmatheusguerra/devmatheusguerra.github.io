@@ -118,52 +118,18 @@ export default {
 }
 
 .smoke {
-  width: 15%;
-  height: 15%;
-  background-color: #000;
-  top: 0;
-  margin-bottom: 10px;
-}
-
-.smoke::before {
-  content: "";
-  display: block;
   width: 100%;
   height: 100%;
-  background-color: inherit;
-  filter: inherit;
+  background-image: url(@/assets/smoke.gif);
+  background-size: cover;
+  background-repeat: no-repeat;
   top: 0;
   margin-bottom: 10px;
-  left: -253.8%;
-  position: absolute;
-  animation: inherit;
+  filter: opacity(0.25);
 }
 
-.smoke {
-  position: relative;
-  width: 5%;
-  height: 15%;
-  background-color: rgba(200, 200, 200, 0.9);
-  filter: blur(6px);
-  top: 0;
-  margin-bottom: 10px;
-  overflow: visible;
-  animation: smoke 3s ease-in-out infinite alternate;
-}
 
-.smoke::after {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-color: inherit;
-  filter: inherit;
-  top: 0;
-  margin-bottom: 10px;
-  left: 253.8%;
-  position: absolute;
-  animation: inherit;
-}
+
 
 .cup {
   position: relative;
