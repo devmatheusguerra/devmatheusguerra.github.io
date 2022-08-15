@@ -11,10 +11,9 @@ export default {
   name: "VueWriter",
   components: {},
   props: ["lang"],
-  mounted() {
-    switch (this.lang) {
-      case "pt":
-        setTimeout(() => {
+  methods: {
+    writePT(){
+      setTimeout(() => {
           const msg = "Olá!";
           const bold = document.querySelector("#bold-welcome");
           let position = 0;
@@ -41,9 +40,10 @@ export default {
             }, 100);
           }, msg.length * 100);
         }, 1000);
-        break;
-      case "en":
-        setTimeout(() => {
+    },
+
+    writeEN(){
+              setTimeout(() => {
           const msg = "Hey there!";
           const bold = document.querySelector("#bold-welcome");
           let position = 0;
@@ -70,8 +70,15 @@ export default {
             }, 100);
           }, msg.length * 100);
         }, 1000);
-        break;
     }
+  },
+  mounted() {
+    if (this.lang === "pt") {
+      this.writePT();
+    } else {
+      this.writeEN();
+    }
+
   },
 };
 </script>
