@@ -90,6 +90,66 @@ export default {
           front: require("@/assets/alura/12-front.png"),
           back: require("@/assets/alura/12-back.png"),
         },
+        {
+          url: "https://cursos.alura.com.br/certificate/c6f5cca2-6b93-4c0d-9d40-057937d99d1c",
+          front: require("@/assets/alura/13-front.png"),
+          back: require("@/assets/alura/13-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/d88f0b15-559f-415c-bb6c-5851b61905fd",
+          front: require("@/assets/alura/14-front.png"),
+          back: require("@/assets/alura/14-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/1c0195d4-9edf-4df9-820c-1276eadae9e9",
+          front: require("@/assets/alura/15-front.png"),
+          back: require("@/assets/alura/15-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/3881e3a1-a091-4ef1-8233-4245ad7d01d4",
+          front: require("@/assets/alura/16-front.png"),
+          back: require("@/assets/alura/16-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/c630ce28-ebe9-47c2-90ed-3bdc9fa81256",
+          front: require("@/assets/alura/17-front.png"),
+          back: require("@/assets/alura/17-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/4bf00e8c-e24c-4fb0-8bdd-7905f91609f6",
+          front: require("@/assets/alura/18-front.png"),
+          back: require("@/assets/alura/18-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/c5d87f76-51d8-465b-8ef6-114c75c56bbf",
+          front: require("@/assets/alura/19-front.png"),
+          back: require("@/assets/alura/19-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/cda0e407-e260-4a97-b20e-b10e2dfeea46",
+          front: require("@/assets/alura/20-front.png"),
+          back: require("@/assets/alura/20-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/18546f21-c4a8-4f10-ad47-303f3b9f5305",
+          front: require("@/assets/alura/21-front.png"),
+          back: require("@/assets/alura/21-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/e648dbb4-d33f-4028-9eac-8fcd768d7cab",
+          front: require("@/assets/alura/22-front.png"),
+          back: require("@/assets/alura/22-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/e6852765-1339-4d16-ac5e-720a61f3c95d",
+          front: require("@/assets/alura/23-front.png"),
+          back: require("@/assets/alura/23-back.png"),
+        },
+        {
+          url: "https://cursos.alura.com.br/certificate/e0be7c6b-6428-4f7e-8a07-bf40144b76da",
+          front: require("@/assets/alura/24-front.png"),
+          back: require("@/assets/alura/24-back.png"),
+        },
       ],
     };
   },
@@ -111,7 +171,7 @@ export default {
 
 .certificates {
   width: 100%;
-  height: fit-content;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -122,6 +182,7 @@ export default {
 }
 
 .certificate {
-  margin: 150px 10px;
+  margin: 300px 10px;
+  margin-top: 0;
 }
 </style>
