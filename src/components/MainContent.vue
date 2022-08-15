@@ -6,7 +6,6 @@
     <GithubLanguages :lang="this.language"></GithubLanguages>
     <SkillLanguages :lang="this.language"></SkillLanguages>
     <EducationJobs :lang="this.language"></EducationJobs>
-    <hr>
     <FreeCourses :lang="this.language"></FreeCourses>
   </main>
 </template>
@@ -19,9 +18,18 @@ import GithubLanguages from "./GithubLanguages.vue";
 import SkillLanguages from "./SkillLanguages.vue";
 import EducationJobs from "./EducationJobs.vue";
 import FreeCourses from "./FreeCourses.vue";
+
 export default {
   name: "MainContent",
-  components: { TopBanner, TopNavbar, GithubMetrics, GithubLanguages, SkillLanguages, EducationJobs, FreeCourses },
+  components: {
+    TopBanner,
+    TopNavbar,
+    GithubMetrics,
+    GithubLanguages,
+    SkillLanguages,
+    EducationJobs,
+    FreeCourses,
+  },
   data() {
     return {
       language: "",
