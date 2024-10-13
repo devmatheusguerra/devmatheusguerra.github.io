@@ -23,9 +23,9 @@ jobs:
 
       - name: Create and run script
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}  # Usa o token gerado pelo GitHub
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
         run: |
-          mkdir -p resources  # Cria a pasta resources se não existir
+          mkdir -p resources
           echo 'import requests' > script.py
           echo 'import json' >> script.py
           echo '' >> script.py
@@ -61,3 +61,16 @@ jobs:
           echo 'print(language_percentages)' >> script.py
 
           python script.py
+
+      - name: List resources
+        run: ls -l resources
+
+      - name: Commit and push results
+        run: |
+          git config --local user.email "${{ secrets.PERSONAL_GITHUB_EMAIL }}"
+          git config --local user.name "${{ secrets.PERSONAL_GITHUB_NAME }}"
+          git add resources/code_metrics.json
+          git commit -m "Add code metrics JSON"
+          git push origin main  # Ou o branch que você está usando
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
