@@ -1,0 +1,68 @@
+name: Get GitHub User Info
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Executa a cada 5 minutos
+  workflow_dispatch:  # Permite execução manual
+
+jobs:
+  fetch-info:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Ou outra versão que você prefira
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Create and run script
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}  # Usa o token gerado pelo GitHub
+        run: |
+          mkdir -p resources
+          echo 'import requests' > script.py
+          echo 'import json' >> script.py
+          echo '' >> script.py
+          echo 'username = "devmatheusguerra"' >> script.py  # Substitua pelo usuário desejado
+          echo 'base_url = f"https://api.github.com/users/{username}"' >> script.py
+          echo 'response = requests.get(base_url)' >> script.py
+          echo '' >> script.py
+          echo 'if response.status_code == 200:' >> script.py
+          echo '    user_data = response.json()' >> script.py
+          echo '    public_repos = user_data.get("public_repos", 0)' >> script.py
+          echo '    public_gists = user_data.get("public_gists", 0)' >> script.py
+          echo '    followers = user_data.get("followers", 0)' >> script.py
+          echo '    following = user_data.get("following", 0)' >> script.py
+          echo '' >> script.py
+          echo '    info = {' >> script.py
+          echo '        "Public Repositories": public_repos,' >> script.py
+          echo '        "Public Gists": public_gists,' >> script.py
+          echo '        "Followers": followers,' >> script.py
+          echo '        "Following": following' >> script.py
+          echo '    }' >> script.py
+          echo '' >> script.py
+          echo '    with open("resources/github_info.json", "w") as json_file:' >> script.py
+          echo '        json.dump(info, json_file, indent=4)' >> script.py
+          echo 'else:' >> script.py
+          echo '    print(f"Error: Unable to fetch data for user '{username}'. Status code: {response.status_code}")' >> script.py
+
+          python script.py
+
+      - name: List resources
+        run: ls -l resources
+
+      - name: Commit and push results
+        run: |
+          git config --local user.email "${{ secrets.PERSONAL_GITHUB_EMAIL }}"
+          git config --local user.name "${{ secrets.PERSONAL_GITHUB_NAME }}"
+          git add resources/github_info.json
+          git commit -m "Add GitHub user info JSON"
+          git push origin main  # Ou o branch que você está usando
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
