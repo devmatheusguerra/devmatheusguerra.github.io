@@ -41,10 +41,10 @@ jobs:
           echo '    following = user_data.get("following", 0)' >> script.py
           echo '' >> script.py
           echo '    info = {' >> script.py
-          echo '        "Public Repositories": public_repos,' >> script.py
-          echo '        "Public Gists": public_gists,' >> script.py
-          echo '        "Followers": followers,' >> script.py
-          echo '        "Following": following' >> script.py
+          echo '        "repositories": public_repos,' >> script.py
+          echo '        "gists": public_gists,' >> script.py
+          echo '        "followers": followers,' >> script.py
+          echo '        "following": following' >> script.py
           echo '    }' >> script.py
           echo '' >> script.py
           echo '    with open("resources/github_info.json", "w") as json_file:' >> script.py
