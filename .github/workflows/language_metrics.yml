@@ -23,7 +23,7 @@ jobs:
 
       - name: Create and run script
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usa o token gerado pelo GitHub
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}  # Usa o token gerado pelo GitHub
         run: |
           mkdir -p resources  # Cria a pasta resources se não existir
           echo 'import requests
