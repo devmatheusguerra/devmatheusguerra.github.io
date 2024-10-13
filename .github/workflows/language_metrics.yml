@@ -1,0 +1,63 @@
+name: Generate Language Metrics
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Executa a cada hora
+  workflow_dispatch:  # Permite execução manual
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Ou outra versão que você prefira
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Create and run script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usa o token gerado pelo GitHub
+        run: |
+          mkdir -p resources  # Cria a pasta resources se não existir
+          echo 'import requests
+import json
+
+username = "devmatheusguerra"
+token = "${{ secrets.GITHUB_TOKEN }}"
+headers = {"Authorization": f"token {token}"}
+
+ignored_languages = ["Jupyter Notebook", "HTML", "TeX", "CSS"]
+
+repos_url = f"https://api.github.com/users/{username}/repos"
+repos = requests.get(repos_url, headers=headers).json()
+
+language_count = {}
+
+for repo in repos:
+    languages_url = repo["languages_url"]
+    languages = requests.get(languages_url, headers=headers).json()
+    
+    for language, count in languages.items():
+        if language not in ignored_languages:
+            if language in language_count:
+                language_count[language] += count
+            else:
+                language_count[language] = count
+
+total = sum(language_count.values())
+language_percentages = {lang: (count / total) * 100 for lang, count in language_count.items()}
+
+# Salvar os resultados em um arquivo JSON
+with open("resources/code_metrics.json", "w") as json_file:
+    json.dump(language_percentages, json_file, indent=4)
+
+print(language_percentages)' > script.py
+
+          python script.py
